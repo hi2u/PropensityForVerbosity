@@ -74,6 +74,12 @@ class Config
      */
     public $viewerUrl;
 
+
+    /**
+     * @var string The <head><title> to show on the viewer
+     */
+    public $viewerTitle='Log viewer';
+
     public $emailNotificationConfigs=array();
 
     protected $viewerUsers=array();

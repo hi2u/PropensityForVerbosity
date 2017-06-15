@@ -111,7 +111,7 @@ class Util
         if ( !is_array($backtrace_array) ) return '';
         $trimpath = str_replace('code/classes', '', __DIR__);
         $html='<table border="1" width="100%" class="backtrace">';
-        $html.='<tr><th>#</th><th>File</th><th>Function</th><th>Arguments</th></tr>';
+        $html.='<tr><th>#</th><th>File</th><th>Function</th></tr>';
 
         foreach( $backtrace_array as $i => $assoc )
         {
@@ -126,10 +126,10 @@ class Util
 
             $html .= "<td>{$fileAndLine}</td>";
             $html .= "<td>{$assoc['class']}{$assoc['type']}{$assoc['function']}()</td>";
-            $html .= "<td><pre>";
+            #$html .= "<td><pre>";
             #$html .= implode('<br>', describe_array($assoc['args']) );
             #if (isset($assoc['args'])) $html .= static::cleanup(var_dump_return($assoc['args']));
-            $html .= "</pre></td>";
+            #$html .= "</pre></td>";
             $html .= '</tr>';
         }
         $html .= '</table>';
