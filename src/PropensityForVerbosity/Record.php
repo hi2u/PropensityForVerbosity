@@ -62,14 +62,14 @@ class Record
             $Record->backtrace=debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
             foreach($Record->backtrace as $key => $frame)
             {
-                if (preg_match('#/src/PropensityForVerbosity/[A-Za-z]+\.php$#', $frame['file']))
+                if (isset($frame['file']) AND preg_match('#/src/PropensityForVerbosity/[A-Za-z]+\.php$#', $frame['file']))
                 {
                     unset($Record->backtrace[$key]);
                 }
             }
             $Record->backtrace = array_values($Record->backtrace); // Reset keys
-            $Record->file = $Record->backtrace[0]['file'];
-            $Record->line = $Record->backtrace[0]['line'];
+            if (isset($Record->backtrace[0]['file'])) $Record->file = $Record->backtrace[0]['file'];
+            if (isset($Record->backtrace[0]['line'])) $Record->line = $Record->backtrace[0]['line'];
         }
         else
         {
