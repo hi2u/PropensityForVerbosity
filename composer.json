@@ -9,7 +9,6 @@
     }
   ],
   "require": {
-    "psr/log": "1.0.2",
-    "phpmailer/phpmailer": "v6.0.0rc5"
+    "psr/log": "1.0.2"
   }
 }
