@@ -4,7 +4,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LogLevel;
 use DateTime;
-use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer;
 
 class Logger implements LoggerInterface
 {
@@ -164,10 +164,19 @@ class Logger implements LoggerInterface
     public function renderProverbFilename()
     {
         // Replace non-alphanumeric with hyphens
-        $filenameRequestPath = preg_replace("/[^A-Za-z0-9-]+/" , '-' , $this->requestPath);
+        if ($this->requestPath === '/')
+        {
+            $filenameRequestPath = 'homepage';
+        }
+        else
+        {
+            $filenameRequestPath = preg_replace("/[^A-Za-z0-9-]+/" , '-' , $this->requestPath);
+        }
+
         // Get rid of prefix+suffix hyphens
         $filenameRequestPath = preg_replace('/^-*/', '', $filenameRequestPath);
         $filenameRequestPath = preg_replace('/-*$/', '', $filenameRequestPath);
+        if ($filenameRequestPath==='') $filenameRequestPath = 'unknown';
         // Limit the path length, 50 characters by default
         $filenameRequestPath = substr($filenameRequestPath, 0, $this->Config->filenameRequestPathLength);
         // Set the object properties
