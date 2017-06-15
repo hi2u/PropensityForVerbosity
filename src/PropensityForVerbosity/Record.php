@@ -95,6 +95,12 @@ class Record
 
         }
 
+        // Remove 'args' field from backtraces as they case cause serialize issues when containing closures etc.
+        foreach($Record->backtrace as $frameKey => $frameFields)
+        {
+            if (isset($frameFields['args'])) unset($Record->backtrace[$frameKey]['args']);
+        }
+
         // Context array.  Do redactions and store each context item as print_r output.
         foreach($context as $key => $value)
         {

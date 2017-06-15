@@ -8,7 +8,9 @@ use PHPMailer;
 
 class Logger implements LoggerInterface
 {
-    // Easy global static access to Logger object without using dependency injection etc.
+    /**
+     * @var Logger Easy global static access to Logger object without using dependency injection etc.
+     */
     public static $Logger;
 
     /**
@@ -97,7 +99,7 @@ class Logger implements LoggerInterface
         if ('cli'==php_sapi_name())
         {
             $this->requestMethod = 'CLI';
-            $this->requestPath = implode('-', $_SERVER['argv']);
+            $this->requestPath = implode(' ', $_SERVER['argv']);
             $this->requestUrl = 'CLI: ' . implode(' ', $_SERVER['argv']);
         }
         else

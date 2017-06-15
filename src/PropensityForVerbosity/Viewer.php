@@ -68,6 +68,8 @@ class Viewer
             }
         }
 
+        if (isset($_GET['showFile']) AND $_GET['showFile']) $this->showFile = $_GET['showFile'];
+
         $collectedFileCount=0;
         $listLevel = Util::requestGetValueWithFallback('listLevel', 0);
         $listRequests = Util::requestGetValueWithFallback('listRequests', 10);
