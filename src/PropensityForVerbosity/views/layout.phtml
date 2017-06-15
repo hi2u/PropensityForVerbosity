@@ -1,0 +1,82 @@
+<html>
+<head>
+    <title>PropensityForVerbosity Viewer</title>
+    <meta name="robots" content="noindex">
+</head>
+<style type="text/css">
+    <?php include(__DIR__ . '/viewer.css'); ?>
+</style>
+
+<body>
+
+
+<div class="fileListWrapper">
+    <?php include(__DIR__ . '/fileList.phtml'); ?>
+</div>
+
+
+
+<div style="padding-top:3em; padding-bottom:2em;">
+    <a href="<?=$this->viewLatestRequestUrl();?>">
+        <button class="viewLatestRequestButton">View latest request</button>
+    </a>
+</div>
+
+
+
+
+<?php include(__DIR__ . '/records.phtml'); ?>
+
+
+
+
+<div style="padding-top:3em; padding-bottom:1em;">
+    <a href="<?=$this->viewLatestRequestUrl();?>">
+        <button class="viewLatestRequestButton viewLatestRequestButtonBottom">View latest request</button>
+    </a>
+</div>
+
+
+
+
+<?php
+if ($this->Config->tailErrorLogLines > 0)
+{
+    echo "<h1>Nginx error log:</h1>";
+    $errorLogContent = htmlentities(`/usr/bin/tail --lines=60 /var/log/nginx/error.log`);
+    $errorLogContent = nl2br($errorLogContent);
+    echo $errorLogContent;
+
+}
+?>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+        var now = moment();
+        $('time.timeAgo').each(function(i, e) {
+            var time = moment($(e).attr('datetime'));
+            $(e).html(time.from(now));
+            $(e).attr('title', time.format('D MMM YYYY h:mma'));
+        });
+
+        var now = moment();
+        $('time.localTimestamp').each(function(i, e) {
+            var time = moment($(e).attr('datetime'));
+            $(e).html(time.format('D MMM YYYY h:mma'));
+        });
+
+
+
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+
+<table class="fileList rowHoverHighlighting">
+    <thead>
+    <th>REQUEST</th>
+    <th>AGE</th>
+    <th>YOUR TIME</th>
+    <th>LEVEL</th>
+    <th>URL / COMMAND</th>
+    </thead>
+
+    <tbody>
+    <?php
+    foreach($this->proverbFiles as $i => $proverbFile) {
+        ?>
+        <tr class="<?= $proverbFile['levelClass']; ?>">
+            <td style="text-align:right;">
+                <a href="<?= $proverbFile['url']; ?>"><?= $proverbFile['requestsAgo']; ?></a>
+            </td>
+            <td>
+                <a href="<?= $proverbFile['url']; ?>"><?= \PropensityForVerbosity\Util::timeElement($proverbFile['DateTime'], 'timeAgo'); ?></a>
+            </td>
+            <td>
+                <a href="<?= $proverbFile['url']; ?>"><?= \PropensityForVerbosity\Util::timeElement($proverbFile['DateTime'], 'localTimestamp'); ?></a>
+            </td>
+            <td>
+                <a href="<?= $proverbFile['url']; ?>"><?= $proverbFile['highestLevelNameEncountered']; ?></a>
+            </td>
+            <td>
+                <a href="<?= $proverbFile['url']; ?>"><?= $proverbFile['requestMethod']; ?> <?= $proverbFile['requestPath']; ?></a>
+            </td>
+        </tr>
+
+
+    <?php } ?>
+    </tbody>
+
+</table>
+<div class="fileListFilters" style="text-align: center; margin-top:0.5em; margin-bottom: 2em;">
+    <div>
+        Level: <?=$this->listLevelLinks();?>
+    </div>
+    <div>
+        Show: <?=$this->listRequestsLinks();?>
+    </div>
+
+
+</div>
+
+
+
+
+

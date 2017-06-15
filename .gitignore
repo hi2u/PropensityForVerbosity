@@ -1,0 +1,5 @@
+.idea/
+vendor/
+offline/
+composer.lock
+.directory

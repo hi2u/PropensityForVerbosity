@@ -1,0 +1,116 @@
+<table class="recordTable">
+
+
+
+
+    <?php
+$columns=5;
+foreach($this->records as $recordKey => $Record) {
+
+    $totalMilliseconds = $Record->millisecondsSinceRequestStarted();
+    if (isset($diffMilliseconds))
+    {
+        $diffMilliseconds = $totalMilliseconds - $this->records[$recordKey-1]->millisecondsSinceRequestStarted();
+    }
+    else
+    {
+        $diffMilliseconds=$totalMilliseconds;
+    }
+    $timingDisplay = "<span class=\"dimText\">+</span>{$diffMilliseconds}<span class=\"dimText\">=</span>{$totalMilliseconds}<span class=\"dimText\">ms</span>";
+
+
+    if ($diffMilliseconds > 20)
+    {
+        $slowDisplay = "{$diffMilliseconds} milliseconds";
+    }
+    else
+    {
+        $slowDisplay = '';
+    }
+    $fontsize = $diffMilliseconds/12;
+    if ($fontsize < 10) $fontsize=10;
+    if ($fontsize > 120) $fontsize=120;
+    $fontsize = round($fontsize);
+    $slowHeight = min(100, ($diffMilliseconds/20));
+
+    $memoryDisplay  = round( $Record->getMemoryUsageUsed() / 1048576, 1 );
+    #$memoryDisplay .= '/';
+    #$memoryDisplay .= round( $Record->getMemoryUsageReal() / 1048576, 1 );
+
+    ?>
+
+
+    <?php if($slowDisplay) { ?>
+
+    <tr class="spacer">
+        <td colspan="<?=$columns;?>" style="height: <?=$slowHeight;?>px; font-size: <?=$fontsize;?>px; overflow: hidden; "><?=$slowDisplay;?></td>
+    </tr>
+
+        <? } ?>
+
+
+
+
+    <tr class="recordRow  <?= $Record->levelNameUpper(); ?>">
+
+        <td style="text-align: right;"><?= $timingDisplay; ?></td>
+        <td style="text-align: right; white-space:nowrap;"><?= $memoryDisplay; ?>MB</td>
+
+        <td class="clickable nowrap"
+            onclick="$('#context<?= $Record->getUniqueIdentifier(); ?>').hide() ; $('#backtrace<?= $Record->getUniqueIdentifier(); ?>').toggle(); "><?= htmlentities($Record->getFileBasename()); ?>:<?= $Record->getLine(); ?></td>
+
+        <td class="<?=$Record->getContextClickableClass();?> nowrap"
+            onclick="$('#backtrace<?= $Record->getUniqueIdentifier(); ?>').hide() ; $('#context<?= $Record->getUniqueIdentifier(); ?>').toggle(); "><?= $Record->levelNameUpper(); ?> <?=$Record->getContextCountDisplay();?></td>
+
+        <td><?= htmlentities($Record->getMessage()); ?></td>
+
+    </tr>
+
+    <tr  class="memoryUsageRow" id="memoryUsage<?=$Record->getUniqueIdentifier();?>" style="display:none;">
+        <td colspan="<?=$columns;?>">
+            <h1></h1>
+
+        </td>
+    </tr>
+
+
+    <tr  class="backtraceRow" id="backtrace<?=$Record->getUniqueIdentifier();?>" style="display:none;">
+        <td colspan="<?=$columns;?>">
+            <h1>Backtrace:</h1>
+            <?=$Record->getBacktraceTable();?>
+
+        </td>
+    </tr>
+
+
+    <?php if ($Record->getContextCount() > 0) { ?>
+    <tr class="contextRow <?= $Record->levelNameUpper(); ?>"  id="context<?=$Record->getUniqueIdentifier();?>" style="display:none;">
+        <td colspan="<?=$columns;?>">
+            <?=$Record->getContextHeading();?>
+
+            <table class="contextTable">
+            <?php foreach($Record->getContext() as $contextKey => $contextValue) { ?>
+                <tr>
+                    <td><h2><?=htmlentities($contextKey);?></h2></td>
+                    <td><pre><?=htmlentities($contextValue);?></pre></td>
+                </tr>
+            <?php } ?>
+            </table>
+        </td>
+    </tr>
+    <?php } ?>
+
+
+
+
+
+
+
+
+
+<?php }
+
+
+?>
+
+</table>

@@ -1,0 +1,233 @@
+body {
+    background-color: white;
+}
+
+body, p, td {
+    font-family: Consolas, Monospace;
+    color:#000000;
+    font-size:12px;
+}
+table {
+    border: none;
+    border-collapse: collapse;
+}
+table th {
+    padding: 4px;
+    font-size: 12px;
+    border: 2px solid #757575;
+    text-align: center;
+    font-weight: normal;
+    white-space: nowrap;
+}
+table td {
+    padding: 4px;
+    border: 2px solid #757575;
+}
+table.backtrace {
+}
+table.backtrace th {
+    font-weight: bold;
+}
+td.backtrace {
+    background-color: #c3c3c3;
+}
+td.context {
+}
+tr.spacer {
+    background-color: #353030;
+}
+tr.spacer td {
+    color:white;
+    text-align: center;
+}
+
+.DEBUG {
+    background-color: #FFF6B9;
+}
+.INFO {
+    background-color: #CEFFCB;
+}
+tr.NOTICE {
+    background-color: #93FFEB;
+}
+tr.WARNING {
+    background-color: #93C8FF;
+}
+tr.ERROR
+{
+    background-color: #f9d7c7;
+}
+
+tr.CRITICAL,
+tr.ALERT,
+tr.EMERGENCY
+{
+    background-color: #f7c7c7;
+}
+
+
+.clickable {
+    cursor: row-resize;
+}
+td.clickable:hover {
+    /*opacity: 0.8;*/
+    background-color: yellow;
+    color: black;
+}
+
+a {
+    text-decoration: none;
+}
+table.fileList a:hover {
+    background-color: yellow;
+    color: black;
+}
+table.fileList a:visited {
+    color: grey;
+}
+
+table.fileList {
+    background-color: #424242;
+    margin: 0 auto;
+    font-size: 214px;
+}
+
+table.fileList a {
+    color: black;
+    font-size: 14px;
+}
+
+table.fileList th {
+    color: white;
+}
+
+
+
+.fileListFilters a {
+    color:blue;
+}
+.fileListFilters a:hover {
+    background-color:yellow;
+    color: black;
+}
+
+table.rowHoverHighlighting tr:hover {
+    /*background-color: #525252;*/
+    opacity: 0.8;
+}
+
+.fileListWrapper {
+
+}
+
+table.recordTable {
+    width: 100%;
+}
+
+.viewLatestRequestButton {
+    width: 100%;
+    background-color: #ececec;
+    color: #c7c7c7;
+    font-size: 30px;
+    padding:0.2em;
+    margin:0;
+    border:0;
+    cursor: pointer;
+}
+
+.viewLatestRequestButton:hover {
+    background-color: #bcffc4;
+    color:#45709e;
+}
+.viewLatestRequestButton:hover {
+    /*opacity: 0.8;*/
+}
+
+.viewLatestRequestButtonBottom {
+    padding: 1em;
+}
+
+
+tr.backtraceRow {
+    background-color:#2f2e2e;
+}
+
+tr.backtraceRow h1 {
+    color: white;
+}
+
+tr.backtraceRow table th,
+tr.backtraceRow table td {
+    color:white;
+}
+
+
+td.contextClickableAllowed {
+    cursor: row-resize;
+}
+td.contextClickableAllowed:hover {
+    background-color: yellow;
+    color: black;
+}
+td.contextClickableNotAllowed {
+    cursor: not-allowed;
+}
+
+
+
+table tr.contextRow td {
+    border-bottom:solid black thick;
+}
+
+
+table tr.contextRow {
+    opacity: 0.7;
+}
+
+table tr.contextRow td {
+    opacity: 1;
+}
+
+.dimHeading {
+    opacity: 0.3;
+    font-style: italic;
+}
+
+table.contextTable {
+    width: 100%;
+}
+table.contextTable tr td {
+    border-bottom: none;
+}
+
+
+table.contextTable tr th,
+table.contextTable tr td
+{
+    padding: 4px;
+    font-size: 12px;
+    border: 1px solid #757575;
+}
+
+
+table.recordTable tr th {
+    background-color: black;
+    color: white;
+    font-size: 12px;
+}
+
+
+.bigArrows {
+    font-size: 20px;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+body table tr td span.dimText {
+    text-color: grey;
+}
+
+
+
