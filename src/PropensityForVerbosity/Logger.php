@@ -106,7 +106,7 @@ class Logger implements LoggerInterface
         {
             $this->requestMethod = strtoupper($_SERVER['REQUEST_METHOD']);
             $this->requestPath = $_SERVER['REQUEST_URI'];
-            $this->requestUrl = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+            $this->requestUrl = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         }
 
         // Storage folder
@@ -229,7 +229,6 @@ class Logger implements LoggerInterface
         {
             #print_r($this->Config->emailJobs);
             #die();
-            echo $levelName;
             if (in_array($levelName, $EmailNotificationConfig->levelNames))
             {
                 $mailKey = $EmailNotificationConfig->from;

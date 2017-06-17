@@ -75,7 +75,7 @@ class Record
         {
             if ($message instanceof \Exception)
             {
-                $Record->message = (string)$message;
+                $Record->message = $message->getMessage();
                 $Record->file = $message->getFile();
                 $Record->line = $message->getLine();
                 $Record->backtrace = $message->getTrace();
