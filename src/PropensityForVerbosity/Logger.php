@@ -64,6 +64,13 @@ class Logger implements LoggerInterface
     protected $rootStorageFolder;
 
     /**
+     * @var bool Once $Config->flushThreshold has been reached, this will be set to true, and all buffer records are
+     * written to disk, and then any following records are written to disk immediately.  i.e. $writeToDisk never goes
+     * back to false once it has been true.
+     */
+    protected $writeToDisk=false;
+
+    /**
      * @var Config The \PropensityForVerbosity\Config object containing settings/preferences.
      */
     public $Config;
@@ -203,27 +210,34 @@ class Logger implements LoggerInterface
         $levelNumber = Record::LEVEL_NUMBERS[$levelName];
         if (!isset($this->highestLevelNumberEncountered) OR $levelNumber > $this->highestLevelNumberEncountered)
         {
+            if (!$this->writeToDisk AND $levelNumber >= Record::LEVEL_NUMBERS[$this->Config->flushThreshold]) $this->writeToDisk=true;
             $oldProverbFilepath = $this->proverbFilepath;
             $this->highestLevelNumberEncountered = $levelNumber;
             $this->highestLevelNameEncountered = $levelName;
             $this->renderProverbFilename();
             // Rename the existing file
-            if ($oldProverbFilepath)
+            if ($oldProverbFilepath AND file_exists($oldProverbFilepath))
             {
                 fclose($this->proverbFileHandle);
                 unset($this->proverbFileHandle);
                 rename($oldProverbFilepath, $this->proverbFilepath);
             }
         }
-        if (!isset($this->proverbFileHandle)) $this->proverbFileHandle = fopen( $this->proverbFilepath , 'a' );
+        if ($this->writeToDisk AND !isset($this->proverbFileHandle)) $this->proverbFileHandle = fopen( $this->proverbFilepath , 'a' );
         $Record = Record::create($levelName, $message, $context, $this);
 
+        // Only buffer/write records that are $this->Config->bufferThreshold and above.
+        if ($levelNumber >= Record::LEVEL_NUMBERS[$this->Config->bufferThreshold]) $this->recordsBuffer[] = $Record;
+        if ($this->writeToDisk)
+        {
+            foreach($this->recordsBuffer as $writeRecordKey => $WriteRecord)
+            {
+                fwrite($this->proverbFileHandle, $WriteRecord->getSerialized() . "\nPROPENSITYFORVERBOSITYRECORDSEPARATOR\n");
+                unset($this->recordsBuffer[$writeRecordKey]);
+            }
+        }
 
-
-        fwrite(
-            $this->proverbFileHandle,
-            $Record->getSerialized() . "\nPROPENSITYFORVERBOSITYRECORDSEPARATOR\n");
-
+        // SEND EMAILS
         $instantEmails=[];
         foreach($this->Config->emailNotificationConfigs as $EmailNotificationConfig)
         {

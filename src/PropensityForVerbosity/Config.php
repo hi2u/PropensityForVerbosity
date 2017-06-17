@@ -7,15 +7,16 @@ class Config
     /**
      * @var int Once this level or higher is encountered, all records in the RAM buffer will be written to disk.
      * Once this happens, all following records write to disk immediately upon creation, i.e. no buffering is done.
-     * So this means that the default of "DEBUG" there would never be any buffering at all.
+     * So this means that the default of "debug" there would never be any buffering at all (always write immediately).
      * i.e.
      */
-    protected $flushThreshold = LogLevel::DEBUG;
+    public $flushThreshold = LogLevel::DEBUG;
 
     /**
      * @var int Minimum level to store in the RAM buffer.  If the buffer is never flushed, these records are lost.
+     * Anything below this level is never logged at all.
      */
-    protected $bufferThreshold = LogLevel::DEBUG;
+    public $bufferThreshold = LogLevel::DEBUG;
 
 
 

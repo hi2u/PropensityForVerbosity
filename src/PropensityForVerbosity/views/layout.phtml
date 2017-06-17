@@ -71,7 +71,7 @@ if ($this->Config->tailErrorLogLines > 0)
         var now = moment();
         $('time.localTimestamp').each(function(i, e) {
             var time = moment($(e).attr('datetime'));
-            $(e).html(time.format('D MMM YYYY h:mma'));
+            $(e).html(time.format('D MMM YYYY h:mm:ssa'));
         });
 
 
