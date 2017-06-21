@@ -60,6 +60,11 @@ class Record
         {
             $Record->message = $message;
         }
+        elseif(is_array($message))
+        {
+            $Record->message = "Array with " . count($message) . " elements...";
+            $context['arrayContents'] = $message;
+        }
         elseif (is_object($message))
         {
             if ($message instanceof \Exception)
