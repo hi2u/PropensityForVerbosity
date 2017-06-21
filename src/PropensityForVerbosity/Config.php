@@ -65,7 +65,7 @@ class Config
      * @var string Context items that are arrays (e.g. $_POST) will have senstitive stuff like passwords removed before
      * being logged.  This regex is used to match array keys that may contain secrets...
      */
-    public $arrayRedactionRegex = '/password|passwd|secret|key|AUTH_PW|PHPSESSID/i';
+    public $arrayRedactionRegex = '/password|passwd|secret|key|AUTH_PW|PHPSESSID|HTTP_COOKIE/i';
 
 
 

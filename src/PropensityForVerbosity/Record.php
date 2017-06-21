@@ -59,19 +59,8 @@ class Record
         if (is_string($message))
         {
             $Record->message = $message;
-            $Record->backtrace=debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-            foreach($Record->backtrace as $key => $frame)
-            {
-                if (isset($frame['file']) AND preg_match('#/src/PropensityForVerbosity/[A-Za-z]+\.php$#', $frame['file']))
-                {
-                    unset($Record->backtrace[$key]);
-                }
-            }
-            $Record->backtrace = array_values($Record->backtrace); // Reset keys
-            if (isset($Record->backtrace[0]['file'])) $Record->file = $Record->backtrace[0]['file'];
-            if (isset($Record->backtrace[0]['line'])) $Record->line = $Record->backtrace[0]['line'];
         }
-        else
+        elseif (is_object($message))
         {
             if ($message instanceof \Exception)
             {
@@ -86,13 +75,33 @@ class Record
                     'message' => $Record->message,
                     'code' => $message->getCode(),
                 ];
-
             }
             else
             {
-                throw new PropensityForVerbosityException("$message argument should be a string or Exception object, type was: " . gettype($message));
+                $Record->message = "Object type " . get_class($message) . "...";
+                $context['ObjectContents'] = $message;
             }
 
+        }
+        else
+        {
+            throw new PropensityForVerbosityException("Record::create() message argument should be a string or object, type was: " . gettype($message));
+        }
+
+
+        if (!$Record->backtrace)
+        {
+            $Record->backtrace=debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            foreach($Record->backtrace as $key => $frame)
+            {
+                if (isset($frame['file']) AND preg_match('#/src/PropensityForVerbosity/[A-Za-z]+\.php$#', $frame['file']))
+                {
+                    unset($Record->backtrace[$key]);
+                }
+            }
+            $Record->backtrace = array_values($Record->backtrace); // Reset keys
+            if (isset($Record->backtrace[0]['file'])) $Record->file = $Record->backtrace[0]['file'];
+            if (isset($Record->backtrace[0]['line'])) $Record->line = $Record->backtrace[0]['line'];
         }
 
         // Remove 'args' field from backtraces as they case cause serialize issues when containing closures etc.

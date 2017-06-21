@@ -204,7 +204,7 @@ class Logger implements LoggerInterface
     public function log($levelName, $message, array $context = array())
     {
         if (!is_string($levelName)) throw new InvalidArgumentException("Level name should be a string, argument given was: " . $levelName);
-        if (!is_string($message) AND !($message instanceof \Exception)) throw new InvalidArgumentException("$message should be a string or Exception object");
+        if (!is_string($message) AND !(is_object($message))) throw new InvalidArgumentException("Logger::log() message argument should be a string or object, type given: " . gettype($message));
         if (!is_array($context)) throw new InvalidArgumentException('$context should be an array, given argument was a ' . gettype($context));
 
         $levelNumber = Record::LEVEL_NUMBERS[$levelName];
