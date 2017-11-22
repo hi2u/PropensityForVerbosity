@@ -204,7 +204,6 @@ class Logger implements LoggerInterface
     public function log($levelName, $message, array $context = array())
     {
         if (!is_string($levelName)) throw new InvalidArgumentException("Level name should be a string, argument given was: " . $levelName);
-        if (!is_string($message) AND !is_array($message) AND !is_object($message)) throw new InvalidArgumentException("Logger::log() message argument should be a string, array or object, type given: " . gettype($message));
         if (!is_array($context)) throw new InvalidArgumentException('$context should be an array, given argument was a ' . gettype($context));
 
         $levelNumber = Record::LEVEL_NUMBERS[$levelName];
@@ -225,6 +224,20 @@ class Logger implements LoggerInterface
         }
         if ($this->writeToDisk AND !isset($this->proverbFileHandle)) $this->proverbFileHandle = fopen( $this->proverbFilepath , 'a' );
         $Record = Record::create($levelName, $message, $context, $this);
+
+        // OUTPUT to interactive CLI consoles
+        if (php_sapi_name()==='cli' AND ( isset($_SERVER['TERM']) OR isset($_SERVER['SSH_CONNECTION']) ))
+        {
+            echo
+                $Record->getFileBasename() .
+                ':' .
+                $Record->getLine() .
+                ' ' .
+                $this->Config->ansiColors[$levelName] .
+                $message .
+                Config::ANSI_RESET . PHP_EOL;
+        }
+
 
         // Only buffer/write records that are $this->Config->bufferThreshold and above.
         if ($levelNumber >= Record::LEVEL_NUMBERS[$this->Config->bufferThreshold]) $this->recordsBuffer[] = $Record;

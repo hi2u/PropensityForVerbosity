@@ -104,10 +104,18 @@ class Record
                     unset($Record->backtrace[$key]);
                 }
             }
+
+            if (isset($context['_skipBacktraceFrames']))
+            {
+                $Record->backtrace = array_slice($Record->backtrace, $context['_skipBacktraceFrames']);
+            }
+
             $Record->backtrace = array_values($Record->backtrace); // Reset keys
             if (isset($Record->backtrace[0]['file'])) $Record->file = $Record->backtrace[0]['file'];
             if (isset($Record->backtrace[0]['line'])) $Record->line = $Record->backtrace[0]['line'];
         }
+
+
 
         // Remove 'args' field from backtraces as they case cause serialize issues when containing closures etc.
         foreach($Record->backtrace as $frameKey => $frameFields)

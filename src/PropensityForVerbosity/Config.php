@@ -62,7 +62,7 @@ class Config
 
 
     /**
-     * @var string Context items that are arrays (e.g. $_POST) will have senstitive stuff like passwords removed before
+     * @var string Context items that are arrays (e.g. $_POST) will have sensitive stuff like passwords removed before
      * being logged.  This regex is used to match array keys that may contain secrets...
      */
     public $arrayRedactionRegex = '/password|passwd|secret|key|AUTH_PW|PHPSESSID|HTTP_COOKIE/i';
@@ -84,6 +84,27 @@ class Config
     public $emailNotificationConfigs=array();
 
     protected $viewerUsers=array();
+
+    const ANSI_RESET = "\e[0m";
+    const ANSI_BLACK_LIGHT = "\e[1;30m";
+    const ANSI_RED_LIGHT = "\e[1;31m";
+    const ANSI_GREEN_LIGHT = "\e[1;32m";
+    const ANSI_YELLOW_LIGHT = "\e[1;33m";
+    const ANSI_BLUE_LIGHT = "\e[1;34m";
+    const ANSI_MAGENTA_LIGHT = "\e[1;35m";
+    const ANSI_CYAN_LIGHT = "\e[1;36m";
+    const ANSI_WHITE_LIGHT = "\e[1;37m";
+
+    public $ansiColors = [
+        LogLevel::DEBUG => self::ANSI_YELLOW_LIGHT,
+        LogLevel::INFO => self::ANSI_GREEN_LIGHT,
+        LogLevel::NOTICE => self::ANSI_BLACK_LIGHT,
+        LogLevel::WARNING => self::ANSI_MAGENTA_LIGHT,
+        LogLevel::ERROR => self::ANSI_RED_LIGHT,
+        LogLevel::CRITICAL => self::ANSI_RED_LIGHT,
+        LogLevel::ALERT => self::ANSI_RED_LIGHT,
+        LogLevel::EMERGENCY => self::ANSI_RED_LIGHT
+    ];
 
 
     #   ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗
