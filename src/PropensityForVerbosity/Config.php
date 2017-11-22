@@ -60,6 +60,12 @@ class Config
     public $logServerArray=true;
     public $logCookieArray=true;
 
+    /**
+     * @var bool If true, the log viewer will show a large black box between slow intervals to represent a big gap
+     * in time.
+     */
+    public $slowDisplay=true;
+
 
     /**
      * @var string Context items that are arrays (e.g. $_POST) will have sensitive stuff like passwords removed before
