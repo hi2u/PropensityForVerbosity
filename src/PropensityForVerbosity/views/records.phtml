@@ -19,7 +19,7 @@ foreach($this->records as $recordKey => $Record) {
     $timingDisplay = "<span class=\"dimText\">+</span>{$diffMilliseconds}<span class=\"dimText\">=</span>{$totalMilliseconds}<span class=\"dimText\">ms</span>";
 
 
-    if ($diffMilliseconds > 20)
+    if ($this->Config->slowDisplay AND $diffMilliseconds > 20)
     {
         $slowDisplay = "{$diffMilliseconds} milliseconds";
     }
