@@ -163,7 +163,7 @@ class Viewer
             else
             {
                 header('WWW-Authenticate: Basic realm="Logging system"');
-                header('HTTP/1.0 401 Unauthorized');
+                header($_SERVER["SERVER_PROTOCOL"] . ' 401 Unauthorized');
                 echo 'Authentication required';
                 exit;
             }
