@@ -158,7 +158,7 @@ class Viewer
         {
             if (isset($_SERVER['PHP_AUTH_USER']) AND $this->Config->authenticateViewerUser($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
             {
-                require __DIR__ . '/views/layout.phtml';
+                $this->displayWithoutAuthentication();
             }
             else
             {
@@ -173,10 +173,14 @@ class Viewer
             echo "No viewer users have been added to the config.";
             die();
         }
-
-
-
     }
+
+    public function displayWithoutAuthentication()
+    {
+        require __DIR__ . '/views/layout.phtml';
+    }
+
+
     protected function listRequestsLinks()
     {
         $links=array();
