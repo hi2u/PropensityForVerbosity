@@ -86,6 +86,12 @@ class Util
     }
 
 
+    public static function detectWebsiteHostname()
+    {
+        if (isset($_SERVER['HTTP_HOST']) AND $_SERVER['HTTP_HOST']) return $_SERVER['HTTP_HOST'];
+        if (isset($_SERVER['SERVER_NAME']) AND $_SERVER['SERVER_NAME']) return $_SERVER['SERVER_NAME'];
+        return null;
+    }
 
 
 

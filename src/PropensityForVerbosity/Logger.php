@@ -113,7 +113,7 @@ class Logger implements LoggerInterface
         {
             $this->requestMethod = strtoupper($_SERVER['REQUEST_METHOD']);
             $this->requestPath = $_SERVER['REQUEST_URI'];
-            $this->requestUrl = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            $this->requestUrl = Util::detectWebsiteHostname() . $_SERVER['REQUEST_URI'];
         }
 
         // Storage folder
