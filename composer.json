@@ -1,7 +1,6 @@
 {
   "name": "hi2u/propensityforverbosity",
   "description": "The colorful & chatty scallywag of PHP loggers",
-  "version": "1.0.0",
   "license": "MIT",
   "authors": [
     {
