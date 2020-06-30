@@ -160,7 +160,7 @@ class Config
     {
         if (count($this->rootStorageFoldersToTry)==0)
         {
-            $this->rootStorageFoldersToTry = array('/tmp/propensityforverbosity', '/tmp');
+            $this->rootStorageFoldersToTry = array('/var/log/propensityforverbosity', '/tmp/propensityforverbosity', '/tmp');
         }
         return $this->rootStorageFoldersToTry;
     }
